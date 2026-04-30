@@ -31,6 +31,9 @@ namespace Poker
         int balance = 1000000;   // 總金額（餘額）
         int betAmount = 0;    // 下注金額
 
+        int winStreak = 0;
+        int loseStreak = 0;
+
         #endregion
 
         public frmPoker()
@@ -38,6 +41,8 @@ namespace Poker
 
             InitializeComponent();
             InitializePoker();
+
+            SetupButtonHover();
 
             lblTotalValue.Text = balance.ToString();
 
@@ -114,6 +119,86 @@ namespace Poker
                 allPoker[r] = allPoker[0];
                 allPoker[0] = temp;
             }
+        }
+
+        private async Task AnimateBalance(int start, int end)
+        {
+            long diff = Math.Abs((long)end - start);
+
+            // 自動決定動畫步數
+            int steps = 30;
+
+            // 差距越大，每步跳越多
+            long stepValue = diff / steps;
+            if (stepValue < 1) stepValue = 1;
+
+            int current = start;
+
+            for (int i = 0; i < steps; i++)
+            {
+                if (current == end) break;
+
+                current += (end > start) ? (int)stepValue : -(int)stepValue;
+
+                lblTotalValue.Text = current.ToString();
+                await Task.Delay(10); // 固定時間，不用跟數字綁死
+            }
+
+            lblTotalValue.Text = end.ToString();
+        }
+
+
+        private void CheckGameOver()
+        {
+            if (balance <= 0)
+            {
+                MessageBox.Show("你破產了！遊戲結束");
+
+                btnDealCard.Enabled = false;
+                btnBet.Enabled = false;
+                btnChangeCard.Enabled = false;
+                btnCheck.Enabled = false;
+            }
+        }
+
+        private async Task AnimateLabelColor(Label lbl, Color from, Color to)
+        {
+            int steps = 40;
+
+            for (int i = 0; i <= steps; i++)
+            {
+                int r = from.R + (to.R - from.R) * i / steps;
+                int g = from.G + (to.G - from.G) * i / steps;
+                int b = from.B + (to.B - from.B) * i / steps;
+
+                lbl.ForeColor = Color.FromArgb(r, g, b);
+
+                await Task.Delay(15);
+            }
+
+            lbl.ForeColor = to;
+        }
+
+        private Color GetWinStreakColor()
+        {
+            if (winStreak >= 7)
+                return Color.DarkRed;
+            else if (winStreak >= 5)
+                return Color.Red;
+            else if (winStreak >= 3)
+                return Color.Gold;
+            else
+                return Color.Black;
+        }
+
+        private Color GetLoseStreakColor()
+        {
+            if (loseStreak >= 5)
+                return Color.DarkBlue;
+            else if (loseStreak >= 3)
+                return Color.Blue;
+            else
+                return Color.Black;
         }
 
         #endregion
@@ -256,8 +341,11 @@ namespace Poker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnCheck_Click(object sender, EventArgs e)
+        private async void btnCheck_Click(object sender, EventArgs e)
         {
+            btnCheck.Enabled = false;
+            btnDealCard.Enabled = false;
+
             int odds = 0;
 
             string[] colorList = { "梅花", "方塊", "愛心", "黑桃" };
@@ -399,11 +487,61 @@ namespace Poker
             lblResult.Text = result;
 
             int winMoney = betAmount * odds;
-            balance += winMoney;
+            bool isWin = winMoney > 0;
 
-            lblTotalValue.Text = balance.ToString();
+            if (isWin)
+            {
+                winStreak++;
+                loseStreak = 0;
+            }
+            else
+            {
+                loseStreak++;
+                winStreak = 0;
+            }
+            //balance += winMoney;
+
+            //lblTotalValue.Text = balance.ToString();
+            int oldBalance = balance;
+            balance += winMoney;
+            CheckGameOver();
+
+            _ = AnimateBalance(oldBalance, balance);
 
             lblResult.Text = $"{result} +{winMoney}";
+            lblWinStreak.Text = $"連勝：{winStreak}";
+            lblLoseStreak.Text = $"連敗：{loseStreak}";
+            Color targetColor = GetWinStreakColor();
+            Color currentColor = lblWinStreak.ForeColor;
+
+            if (currentColor != targetColor)
+            {
+                await AnimateLabelColor(lblWinStreak, currentColor, targetColor);
+            }
+
+            if (winStreak >= 7)
+            {
+                lblWinStreak.ForeColor = Color.DarkRed;
+            }
+            else if (winStreak >= 5)
+            {
+                lblWinStreak.ForeColor = Color.Red;
+            }
+            else if (winStreak >= 3)
+            {
+                lblWinStreak.ForeColor = Color.DarkGoldenrod;
+            }
+            else
+            {
+                lblWinStreak.ForeColor = Color.Black;
+            }
+            Color loseTargetColor = GetLoseStreakColor();
+            Color loseCurrentColor = lblLoseStreak.ForeColor;
+
+            if (loseCurrentColor != loseTargetColor)
+            {
+                await AnimateLabelColor(lblLoseStreak, loseCurrentColor, loseTargetColor);
+            }
 
             btnChangeCard.Enabled = false;
             btnCheck.Enabled = false;
@@ -499,11 +637,39 @@ namespace Poker
                 return;
             }
 
+            //balance -= betAmount;
+            //lblTotalValue.Text = balance.ToString();
+            int oldBalance = balance;
             balance -= betAmount;
-            lblTotalValue.Text = balance.ToString();
+
+            _ = AnimateBalance(oldBalance, balance);
 
             btnDealCard.Enabled = true;
             btnBet.Enabled = false;
+        }
+
+        private void SetupButtonHover()
+        {
+            Color hoverColor = ColorTranslator.FromHtml("#D4AF37");
+            Color normalColor = SystemColors.Control;
+
+            void SetHover(Button btn)
+            {
+                btn.MouseEnter += (s, e) =>
+                {
+                    btn.BackColor = hoverColor;
+                };
+
+                btn.MouseLeave += (s, e) =>
+                {
+                    btn.BackColor = normalColor;
+                };
+            }
+
+            SetHover(btnDealCard);
+            SetHover(btnChangeCard);
+            SetHover(btnCheck);
+            SetHover(btnBet);
         }
     }
 }

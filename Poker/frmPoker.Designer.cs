@@ -40,6 +40,8 @@
             this.lblTotalValue = new System.Windows.Forms.Label();
             this.lblBetAmount = new System.Windows.Forms.Label();
             this.lblTotalAmount = new System.Windows.Forms.Label();
+            this.lblLoseStreak = new System.Windows.Forms.Label();
+            this.lblWinStreak = new System.Windows.Forms.Label();
             this.grpButton.SuspendLayout();
             this.grpBet.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +52,7 @@
             this.grpButton.Controls.Add(this.btnCheck);
             this.grpButton.Controls.Add(this.btnChangeCard);
             this.grpButton.Controls.Add(this.btnDealCard);
-            this.grpButton.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.grpButton.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.grpButton.Location = new System.Drawing.Point(67, 419);
             this.grpButton.Margin = new System.Windows.Forms.Padding(4);
             this.grpButton.Name = "grpButton";
@@ -107,7 +109,7 @@
             // 
             // grpPoker
             // 
-            this.grpPoker.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.grpPoker.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.grpPoker.Location = new System.Drawing.Point(67, 48);
             this.grpPoker.Margin = new System.Windows.Forms.Padding(4);
             this.grpPoker.Name = "grpPoker";
@@ -124,7 +126,7 @@
             this.grpBet.Controls.Add(this.lblTotalValue);
             this.grpBet.Controls.Add(this.lblBetAmount);
             this.grpBet.Controls.Add(this.lblTotalAmount);
-            this.grpBet.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.grpBet.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.grpBet.Location = new System.Drawing.Point(67, 277);
             this.grpBet.Margin = new System.Windows.Forms.Padding(4);
             this.grpBet.Name = "grpBet";
@@ -146,9 +148,9 @@
             // 
             // txtBetAmount
             // 
-            this.txtBetAmount.Location = new System.Drawing.Point(401, 55);
+            this.txtBetAmount.Location = new System.Drawing.Point(370, 55);
             this.txtBetAmount.Name = "txtBetAmount";
-            this.txtBetAmount.Size = new System.Drawing.Size(100, 34);
+            this.txtBetAmount.Size = new System.Drawing.Size(161, 34);
             this.txtBetAmount.TabIndex = 3;
             // 
             // lblTotalValue
@@ -162,7 +164,7 @@
             // lblBetAmount
             // 
             this.lblBetAmount.AutoSize = true;
-            this.lblBetAmount.Location = new System.Drawing.Point(303, 60);
+            this.lblBetAmount.Location = new System.Drawing.Point(273, 60);
             this.lblBetAmount.Name = "lblBetAmount";
             this.lblBetAmount.Size = new System.Drawing.Size(92, 25);
             this.lblBetAmount.TabIndex = 1;
@@ -177,11 +179,33 @@
             this.lblTotalAmount.TabIndex = 0;
             this.lblTotalAmount.Text = "總資金";
             // 
+            // lblLoseStreak
+            // 
+            this.lblLoseStreak.AutoSize = true;
+            this.lblLoseStreak.Font = new System.Drawing.Font("微軟正黑體", 16F, System.Drawing.FontStyle.Bold);
+            this.lblLoseStreak.Location = new System.Drawing.Point(368, 580);
+            this.lblLoseStreak.Name = "lblLoseStreak";
+            this.lblLoseStreak.Size = new System.Drawing.Size(96, 35);
+            this.lblLoseStreak.TabIndex = 8;
+            this.lblLoseStreak.Text = "連敗：";
+            // 
+            // lblWinStreak
+            // 
+            this.lblWinStreak.AutoSize = true;
+            this.lblWinStreak.Font = new System.Drawing.Font("微軟正黑體", 16F, System.Drawing.FontStyle.Bold);
+            this.lblWinStreak.Location = new System.Drawing.Point(90, 580);
+            this.lblWinStreak.Name = "lblWinStreak";
+            this.lblWinStreak.Size = new System.Drawing.Size(96, 35);
+            this.lblWinStreak.TabIndex = 7;
+            this.lblWinStreak.Text = "連勝：";
+            // 
             // frmPoker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 581);
+            this.ClientSize = new System.Drawing.Size(789, 655);
+            this.Controls.Add(this.lblLoseStreak);
+            this.Controls.Add(this.lblWinStreak);
             this.Controls.Add(this.grpBet);
             this.Controls.Add(this.grpButton);
             this.Controls.Add(this.grpPoker);
@@ -193,6 +217,7 @@
             this.grpBet.ResumeLayout(false);
             this.grpBet.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -210,5 +235,7 @@
         private System.Windows.Forms.Label lblTotalAmount;
         private System.Windows.Forms.TextBox txtBetAmount;
         private System.Windows.Forms.Button btnBet;
+        private System.Windows.Forms.Label lblLoseStreak;
+        private System.Windows.Forms.Label lblWinStreak;
     }
 }
