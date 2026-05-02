@@ -45,7 +45,6 @@ namespace Poker
             SetupButtonHover();
 
             lblTotalValue.Text = balance.ToString();
-
         }
 
 
@@ -109,15 +108,21 @@ namespace Poker
         /// <summary>
         /// 將 allPoker 陣列中的牌隨機打亂，模擬洗牌的過程
         /// </summary>
+        private Random rand = new Random();
         private void Shuffle()
         {
-            Random rand = new Random();
+            /*Random rand = new Random();
             for (int i = 0; i < 1000; i++)
             {
                 int r = rand.Next(allPoker.Length);
                 int temp = allPoker[r];
                 allPoker[r] = allPoker[0];
                 allPoker[0] = temp;
+            }*/
+            for (int i = allPoker.Length - 1; i > 0; i--)
+            {
+                int j = rand.Next(i + 1);
+                (allPoker[i], allPoker[j]) = (allPoker[j], allPoker[i]);
             }
         }
 
@@ -186,7 +191,7 @@ namespace Poker
             else if (winStreak >= 5)
                 return Color.Red;
             else if (winStreak >= 3)
-                return Color.Gold;
+                return Color.DarkGoldenrod;
             else
                 return Color.Black;
         }
@@ -211,6 +216,7 @@ namespace Poker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
         private void Pic_Click(object sender, EventArgs e)
         {
             PictureBox pic = sender as PictureBox;
@@ -232,6 +238,8 @@ namespace Poker
                 pic.Image = GetImage("back");
             }
         }
+
+
 
         /// <summary>
         /// 當按下發牌按鈕時，隨機產生五個1~52的數字，並將對應的圖片顯示在牌桌上
@@ -519,22 +527,6 @@ namespace Poker
                 await AnimateLabelColor(lblWinStreak, currentColor, targetColor);
             }
 
-            if (winStreak >= 7)
-            {
-                lblWinStreak.ForeColor = Color.DarkRed;
-            }
-            else if (winStreak >= 5)
-            {
-                lblWinStreak.ForeColor = Color.Red;
-            }
-            else if (winStreak >= 3)
-            {
-                lblWinStreak.ForeColor = Color.DarkGoldenrod;
-            }
-            else
-            {
-                lblWinStreak.ForeColor = Color.Black;
-            }
             Color loseTargetColor = GetLoseStreakColor();
             Color loseCurrentColor = lblLoseStreak.ForeColor;
 
@@ -552,6 +544,10 @@ namespace Poker
             txtBetAmount.Text = "";
             btnBet.Enabled = true;
 
+            txtBetAmount.Enabled = true;
+            btnBet.Enabled = true;
+            txtBetAmount.Text = "";
+            betAmount = 0;
         }
 
         /// <summary>
@@ -620,7 +616,6 @@ namespace Poker
                 this.ShowCards();
             }
         }
-
         #endregion
 
         private void btnBet_Click(object sender, EventArgs e)

@@ -53,7 +53,7 @@
             this.grpButton.Controls.Add(this.btnChangeCard);
             this.grpButton.Controls.Add(this.btnDealCard);
             this.grpButton.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.grpButton.Location = new System.Drawing.Point(67, 419);
+            this.grpButton.Location = new System.Drawing.Point(70, 416);
             this.grpButton.Margin = new System.Windows.Forms.Padding(4);
             this.grpButton.Name = "grpButton";
             this.grpButton.Padding = new System.Windows.Forms.Padding(4);
@@ -110,7 +110,7 @@
             // grpPoker
             // 
             this.grpPoker.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.grpPoker.Location = new System.Drawing.Point(67, 48);
+            this.grpPoker.Location = new System.Drawing.Point(70, 45);
             this.grpPoker.Margin = new System.Windows.Forms.Padding(4);
             this.grpPoker.Name = "grpPoker";
             this.grpPoker.Padding = new System.Windows.Forms.Padding(4);
@@ -127,7 +127,7 @@
             this.grpBet.Controls.Add(this.lblBetAmount);
             this.grpBet.Controls.Add(this.lblTotalAmount);
             this.grpBet.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.grpBet.Location = new System.Drawing.Point(67, 277);
+            this.grpBet.Location = new System.Drawing.Point(70, 274);
             this.grpBet.Margin = new System.Windows.Forms.Padding(4);
             this.grpBet.Name = "grpBet";
             this.grpBet.Padding = new System.Windows.Forms.Padding(4);
@@ -183,7 +183,7 @@
             // 
             this.lblLoseStreak.AutoSize = true;
             this.lblLoseStreak.Font = new System.Drawing.Font("微軟正黑體", 16F, System.Drawing.FontStyle.Bold);
-            this.lblLoseStreak.Location = new System.Drawing.Point(368, 580);
+            this.lblLoseStreak.Location = new System.Drawing.Point(371, 577);
             this.lblLoseStreak.Name = "lblLoseStreak";
             this.lblLoseStreak.Size = new System.Drawing.Size(96, 35);
             this.lblLoseStreak.TabIndex = 8;
@@ -193,7 +193,7 @@
             // 
             this.lblWinStreak.AutoSize = true;
             this.lblWinStreak.Font = new System.Drawing.Font("微軟正黑體", 16F, System.Drawing.FontStyle.Bold);
-            this.lblWinStreak.Location = new System.Drawing.Point(90, 580);
+            this.lblWinStreak.Location = new System.Drawing.Point(93, 577);
             this.lblWinStreak.Name = "lblWinStreak";
             this.lblWinStreak.Size = new System.Drawing.Size(96, 35);
             this.lblWinStreak.TabIndex = 7;
@@ -203,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 655);
+            this.ClientSize = new System.Drawing.Size(789, 652);
             this.Controls.Add(this.lblLoseStreak);
             this.Controls.Add(this.lblWinStreak);
             this.Controls.Add(this.grpBet);
@@ -213,6 +213,7 @@
             this.Name = "frmPoker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "五張撲克牌";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmPoker_KeyPress);
             this.grpButton.ResumeLayout(false);
             this.grpBet.ResumeLayout(false);
             this.grpBet.PerformLayout();
